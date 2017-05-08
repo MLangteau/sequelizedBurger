@@ -1,0 +1,55 @@
+body {
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
+    background-attachment: fixed;
+    background-image: url('../img/burger.png');
+    background-repeat: no-repeat;
+    background-size: 100%;
+}
+
+h1,h2{
+	text-align: center;
+}
+
+li {
+  padding: 1em;
+  margin: 1em;
+  color: black;
+  background: pink;
+  opacity: .7;
+  list-style-type: none;
+}
+
+.create-form {
+  padding: 1em;
+  margin: 2em 1em 1em 1em;
+  color: black;
+  background: tan;
+  opacity: .8;
+}
+
+.containment {
+	width: 100%;
+	text-align: center;
+}
+
+.right-side, .left-side {
+	display: block;
+	width: 30%;
+	margin: 2em 1em 1em 1em;
+	opacity: .8;
+	margin: 1em;
+}
+
+.left-side {
+	text-align: center;
+	color: black;
+	background: tan;
+	margin-left: 10%;
+}
+
+.right-side {
+	text-align: center;
+	color: black;
+	background: tan;
+}
