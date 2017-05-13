@@ -11,12 +11,13 @@ var db = require("./models");
 
 //  Set up for the Express App
 var app = express();
+
 //  const port is necessary for Heroku deployment
-const port = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3000;
 
 // Set up for the Express app to handle data parsing
 // Parses the text as JSON and exposes the resulting object on req.body.
-app.use(bodyParser.json());  //?
+//app.use(bodyParser.json());  //?
 
 //  bodyParser.urlencoded parses the text as URL encoded data (which is how browsers tend to 
 //  send form data from regular forms set to POST) and exposes the resulting object 
@@ -30,7 +31,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json({ type: "application/vnd.api+json" }));
 
 // Serve static content for the app from the "public" directory in the application directory.
-app.use(express.static(__dirname + "/public"));
+//app.use(express.static(__dirname + "/public"));
+app.use(express.static(process.cwd() + "/public"));
 
 // Override with POST having ?_method=DELETE
 app.use(methodOverride("_method"));
@@ -42,15 +44,16 @@ app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
 // Import routes and give the server access to them.
-var routes = require("./controllers/burgers_controller.js");
+//var routes = require("./controllers/burgers_controller.js");
+require("./controllers/burgers_controller")(app);
 
-app.use("/", routes);
+//app.use("/", routes);
 
 // Require route files
 // =============================================================
 //require("./app/routes/burger-routes.js")(app);
 //require("./app/routes/customer-api-routes.js")(app);
-require("./app/routes/api-routes.js")(app);
+//require("./app/routes/api-routes.js")(app);
 //require("./app/routes/html-routes.js")(app);
 
 
@@ -58,7 +61,7 @@ require("./app/routes/api-routes.js")(app);
 // Starts the server to begin listening
 // =============================================================
 
-db.sequelize.sync({ force: true }).then(function() {
+db.sequelize.sync({ force: false }).then(function() {
 	app.listen(PORT, function() {
 	  console.log("App listening on PORT " + PORT);
 	});

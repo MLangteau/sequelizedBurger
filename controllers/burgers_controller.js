@@ -1,54 +1,65 @@
-// create all functions that has the routing for the app
+//  burger-controller.js sets up Routes to display and save data to the database
 
-var express = require("express");
+//  models are required
+var db = require("../models");
 
-var router = express.Router();
-
-// Import the model (burger.js) to use its database functions.
-//var burger = require("../models/burger.js");
-var burger = require("../models/");
-
-// Import colors for console.logging and debugging
-var colors = require('colors');
+// Routes
+// =============================================================
+module.exports = function(app) {
 
 // Create all our routes
-router.get("/", function(req, res) {
-    res.redirect("/burgers");
+  app.get("/", function(req, res) {
+    res.redirect("api/burgers");
   });
 
-// Router to the burger.js file with the handlebars Object for displaying all
-router.get("/burgers", function(req, res) {
-  burger.selectAll(function(data) {
-    var handlebrsObject = {
-      burgers: data
-    };
-    //  using the index.handlebars file for displaying the object
-    res.render("index", handlebrsObject);
-  });
-});
+//router.get("/burgers", function(req, res) {
+// WAS var queryString = `SELECT * FROM ${tableInput};`; in other file
+  // Find and display all burgers
+  app.get("/api/burgers", function(req, res) {
+    db.Burger.findAll({}).then(function(results) {
+      //res.json(results);
+      res.render('index', {burgers: results}); 
+      // index hdbrs - check on pluralizing
+    });
 
-// Router to the burger.js file with the burger name
-router.post("/burgers/create", function(req, res) {
-  burger.insertOne(req.body.burger_name, function(result) {
-    res.redirect("/");
   });
-});
 
-// Router for updating one of the "burgers" from "not devoured" to "devoured"
-router.put("/:id", function(req, res) {
-  var condition = "id = " + req.params.id;
-  burger.updateOne({devoured: req.body.devoured}, condition, function() {
-    res.redirect("/");
+  // ** Add a burger **
+  app.post("/burgers/create", function(req, res) {
+  //  console.log("Burger Data: req.body *mrl*", req.body);
+    // holds the request
+    db.Burger.create({ 
+        burger_name: req.body.burger_name
+      }).then(function() {
+        res.redirect('/api/burgers');
+    });
   });
-});
 
-// Router for deletion 
-router.delete("/:id", function(req, res) {
-  var condition = "id = " + req.params.id;
-  burger.delete(condition, function() {
-    res.redirect("/");
+  app.put("/:id", function(req, res) {
+//  app.put("/api/update", function(req, res) {
+//  UPDATE 
+// var queryString = `UPDATE ${table} SET ${objToSql(objColVals)} WHERE ${condition}`;
+  
+  db.Burger.update({devoured: true}, {
+      where: {
+        id: req.params.id
+      }
+    }).then(function() {
+      res.redirect('/api/burgers');
+    }
+    ); 
   });
-});
 
-// Export routes for server.js to use.
-module.exports = router;
+  // Delete a Burger
+  app.delete("/:id", function(req, res) {
+
+//    console.log("Burger Data: ", req.body);
+    db.Burger.destroy({ 
+      where: {
+        id: req.params.id
+      }
+    }).then(function(){
+      res.redirect('/api/burgers');
+    })
+  });
+};

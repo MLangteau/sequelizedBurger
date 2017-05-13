@@ -8,14 +8,15 @@
 
 
 module.exports = function(sequelize, dataTypes) {
-    var Burger = sequelize.define('burger', {
+    var Burger = sequelize.define('Burger', {
     burger_name: {
         type: Sequelize.STRING,
-        allowNull: false,
-        validate: {
-            notEmpty: {msg: "Burger name must not be empty"}, 
-            isAlpha: {msg: "Burger name must consist of letters only"}
-        }
+        allowNull: false
+        // ,
+        // validate: {
+        //     notEmpty: {msg: "Burger name must not be empty"}, 
+        //     isAlpha: {msg: "Burger name must consist of letters only"}
+        // }
     },
     devoured: { 
       type: Sequelize.BOOLEAN, 

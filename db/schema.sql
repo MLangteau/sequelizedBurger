@@ -11,8 +11,8 @@ To run this file, we do the following in our Terminal:
 */
 
 -- Create the database wishes_db and specified it for use.
-CREATE DATABASE burgers_db;
-USE burgers_db;
+CREATE DATABASE burgers_seq;
+USE burgers_seq;
 
 -- Create the table wishes.
 CREATE TABLE burgers
