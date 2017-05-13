@@ -1,16 +1,23 @@
 {
-  "developer": {
+  "development": {
     "username": "root",
     "password": "root",
-    "database": "seq_burger",
+    "database": "burger_db",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "test": {
+    "username": "root",
+    "password": "root",
+    "database": "burger_db",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
   "production": {
-    "username": "??????",
-    "password": "????????",
-    "database": "??????????JAWS!!!!!",
-    "host": "??????",
+    "username": "root",
+    "password": "root",
+    "database": "burger_db",
+    "host": "127.0.0.1",
     "dialect": "mysql"
   }
 }

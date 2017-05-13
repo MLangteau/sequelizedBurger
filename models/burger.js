@@ -1,12 +1,34 @@
-// Inside burger.js, import orm.js into burger.js  to create functions that 
-// 		"models" how to interface with burgers_db database
-var orm = require("../config/orm.js");
+// Dependencies
+// 		
+//  Requires Sequelize package ()
+var Sequelize = require("sequelize");
 
-// Also inside burger.js, created the code that will call the ORM functions/methods using 
-// 		burger specific input for the ORM.
+// represents connection to the database
+var sequelize = require("../config/connection.js");
 
-var burger = {
-  table: "burgers",
+//  Create a burger model with custom messages for burger_name validation
+var Burger = sequelize.define('burger', {
+    id: {
+        type: Sequelize.INTEGER,
+        autoIncrement: true,
+        primaryKey: true
+    },
+    burger_name: {
+        type: Sequelize.STRING,
+        validate {
+            notEmpty: {msg: "Burgur name must not be empty"}, 
+            isAlpha: {msg: "Burgur name must consist of letters only"}
+        }
+    },
+    devoured: { 
+      type: Sequelize.BOOLEAN, 
+      allowNull: false, 
+      defaultValue: false
+    }
+});
+
+/*
+    "burgers",
   // Prints out all of the burgers onto the page (devoured and not-devoured)
   selectAll: function(cb) {
     orm.selectAll(this.table, function(res) {
@@ -38,6 +60,11 @@ var burger = {
     });
   }
 };
+*/
+
+// Sync this model with our database
+
+Burger.sync();
 
 // Export the database functions for the controller (burgers_controller.js).
-module.exports = burger;
+module.exports = Burger;
