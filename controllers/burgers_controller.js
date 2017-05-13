@@ -5,7 +5,8 @@ var express = require("express");
 var router = express.Router();
 
 // Import the model (burger.js) to use its database functions.
-var burger = require("../models/burger.js");
+//var burger = require("../models/burger.js");
+var burger = require("../models/");
 
 // Import colors for console.logging and debugging
 var colors = require('colors');
